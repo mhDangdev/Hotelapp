@@ -1,0 +1,165 @@
+{% extends 'layout/base.html' %}
+    {% block title %}
+        Apolo Hotel
+    {% endblock %}
+{% block content %}
+
+<!--banner-->
+<!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+  <!-- Indicators/dots -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+  </div>
+
+  <!-- The slideshow/carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://www.lottehotel.com/content/dam/lotte-hotel/lotte/saigon/accommodation/standard/deluxe-city-view/4252-01-2000-acc-LTHO.jpg.thumb.1440.1440.jpg" alt="Los Angeles" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.lottehotel.com/content/dam/lotte-hotel/lotte/saigon/accommodation/suite/presidential-suite/4266-18-1920-acc-LTHO.jpg.thumb.1440.1440.jpg" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.lottehotel.com/content/dam/lotte-hotel/lotte/saigon/accommodation/suite/deluxe-suite/4263-08-1920-room-LTHO.jpg.thumb.1440.1440.jpg" alt="New York" class="d-block w-100">
+    </div>
+  </div>
+
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+<!--endbanner-->
+<div class="container" id="main">
+<br>
+    <div class="row about_us" id="about_us" >
+            <div class="container p-6">
+                <div class="row">
+                    <div class="col-md-6 col-12 p-2">
+                        <h3 >VỀ CHÚNG TÔI</h3>
+                        <p>Apolo Hotel là thành viên của Tập đoàn Marriott International,
+                            mang đến cho khách hàng cơ hội khám phá, thư giãn và trải nghiệm tại hơn 8000 khách sạn tại 139 quốc gia và vùng lãnh thổ trên khắp thế giới.
+                            Trở thành thành viên Marriott Bonvoy và nhận ngay các quyền lợi</p>
+                    </div>
+                    <div class="col-md-6 col-12 p-2 card-group">
+                        <iframe width="1230" height="320"  src="https://www.youtube.com/embed/kdCCdkGI8zM" title="Apolo Hotel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <br>
+    <div class="row Explore_Room">
+            <h3>KHÁM PHÁ PHÒNG</h3>
+            <div class="container">
+            <div class="row">
+                <div class="col-md-4 p-2">
+                    <div class="card" style="width: 400px;">
+                        <img class="card-img-top uniform-img" src="https://www.vietnambooking.com/wp-content/uploads/2018/06/co-nhung-loai-phong-khach-san-nao-02-06-18-3.jpg" alt="Card image">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <h4 class="card-title text-center">Phòng Deluxe (Kí hiệu DLX)</h4>
+                            <button class="btn btn-primary mt-3 toggle-arrow" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard1" aria-expanded="false" aria-controls="collapseCard1">
+                                Chi tiết <span class="arrow-icon">&#9660;</span>
+                            </button>
+                            <div class="collapse mt-3" id="collapseCard1">
+                                <p class="card-text text-center">Loại phòng khách sạn này thường nằm ở các tầng giữa trở lên nên sở hữu view nhìn ra quang cảnh bên ngoài khá đẹp. Ở vị trí này, chất lượng phòng được nâng lên mức cao cấp với các tiện nghi hiện đại và tốt nhất do đó giá phòng cũng thường khá đắt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 p-2">
+                    <div class="card" style="width: 400px;">
+                        <img class="card-img-top uniform-img" src="https://www.vietnambooking.com/wp-content/uploads/2018/06/co-nhung-loai-phong-khach-san-nao-02-06-18-2.jpg" alt="Card image">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <h4 class="card-title text-center">Phòng Superior (Kí hiệu SUP)</h4>
+                            <button class="btn btn-primary mt-3 toggle-arrow" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard2" aria-expanded="false" aria-controls="collapseCard2">
+                                Chi tiết <span class="arrow-icon">&#9660;</span>
+                            </button>
+                            <div class="collapse mt-3" id="collapseCard2">
+                                <p class="card-text text-center">Loại phòng khách sạn này tương đối chất lượng hơn phòng Standard, diện tích phòng được tăng thêm, có view nhìn và cách bày trí đẹp mắt hơn hẳn và thường nằm ở những tầng gần giữa của tòa nhà.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 p-2">
+                    <div class="card" style="width: 400px;">
+                        <img class="card-img-top uniform-img" src="https://www.vietnambooking.com/wp-content/uploads/2018/06/co-nhung-loai-phong-khach-san-nao-02-06-18-1.jpg" alt="Card image">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <h4 class="card-title text-center">Phòng Standard (Kí hiệu STD)</h4>
+                            <button class="btn btn-primary mt-3 toggle-arrow" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCard" aria-expanded="false" aria-controls="collapseCard">
+                                Chi tiết <span class="arrow-icon">&#9660;</span>
+                            </button>
+                            <div class="collapse mt-3" id="collapseCard">
+                                <p class="card-text text-center">Đây là loại phòng cơ bản nhất tại hầu hết các khách sạn, một số khách sạn 5 sao có thể không có loại phòng này.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center my-5 recommend">
+    <h2 class="mb-4">ĐĂNG KÝ THÀNH VIÊN ĐỂ TẬN HƯỞNG NHIỀU ƯU ĐÃI</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-12">
+            <div class="benefit-item text-center">
+                <div class="img-area mb-3">
+                    <img src="https://www.lottehotel.com/content/dam/lotte-hotel/common/member/pc-mai-rewards1.png" alt="gift icon" class="img-fluid">
+                </div>
+                <div class="txt-area">
+                    <span>Ưu đãi sử dụng dịch vụ dành riêng cho Thành viên</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="benefit-item text-center">
+                <div class="img-area mb-3">
+                    <img src="https://www.lottehotel.com/content/dam/lotte-hotel/common/member/pc-mai-rewards2.png" alt="discount icon" class="img-fluid">
+                </div>
+                <div class="txt-area">
+                    <span>Giá phòng ưu đãi dành riêng cho Thành viên</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="benefit-item text-center">
+                <div class="img-area mb-3">
+                    <img src="https://www.lottehotel.com/content/dam/lotte-hotel/common/member/pc-mai-rewards3.png" alt="reward icon" class="img-fluid">
+                </div>
+                <div class="txt-area">
+                    <span>Tích điểm và đổi thưởng</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button class="btn btn-outline-primary">Đăng ký LOTTE HOTEL Rewards</button>
+    </div>
+</div>
+
+<!--{% if products %}-->
+<!--<div class="row">-->
+<!--    {% for p in products %}-->
+<!--    <div class="col-md-3 col-12 p-2">-->
+<!--        <div class="card">-->
+<!--            <img class="card-img-top" src="{{ p.image }}" alt="{{ p.name }}">-->
+<!--            <div class="card-body">-->
+<!--                <h4 class="card-title">{{ p.name }}</h4>-->
+<!--                <p class="card-text">{{ p.price }} VNĐ</p>-->
+<!--                <a href="#" class="btn btn-primary">Xem chi tiết</a>-->
+<!--                <button class="btn btn-danger" onclick="addToCart({{ p.id }}, '{{ p.name }}', {{ p.price }})">Đặt hàng</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+<!--{% else %}-->
+<!--<div class="alert alert-info mt-1">KHÔNG có sản phẩm nào!</div>-->
+<!--{% endif %}-->
+</div>
+{% endblock %}

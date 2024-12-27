@@ -1,0 +1,50 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<style>
+body {
+    background: url('https://res.cloudinary.com/dglrht3fj/image/upload/v1734869992/202868639_lrbi3x.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+h1 {
+    color: black;
+}
+
+</style>
+<body>
+<h1 class="text-center mt-1">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
+{% if err_msg %}
+<div class="alert alert-danger">
+    <h4>{{ err_msg}}</h4>
+</div>
+{% endif %}
+<form method="post" action="{{url_for('login_process')}}">
+    <div class="form-floating mb-3 mt-3">
+        <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username" />
+        <label for="username">Tên đăng nhập</label>
+    </div>
+
+    <div class="form-floating mt-3 mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Mật khẩu" name="password">
+        <label for="password">Mật khẩu</label>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-mt-6">
+                <div class="form-floating mt-3 mb-3">
+                    <button class="btn btn-danger">Đăng nhập</button>
+                </div>
+            </div>
+            <div class="col-mt-6">
+                 <!-- Sử dụng <a> thay cho <button> để chuyển hướng -->
+                <div class="form-floating mt-3 mb-3">
+                    <a class="btn btn-success" href="{{ url_for('register_process') }}">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+</body>
+{% endblock %}

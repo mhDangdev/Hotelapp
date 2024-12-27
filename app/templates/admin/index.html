@@ -1,0 +1,72 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+{% if current_user.is_authenticated and role_admin == 'ADMIN' %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <h1 class="text-center text-info">BÁO CÁO DOANH THU THEO THÁNG</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+<script>
+    // Truyền dữ liệu từ Flask sang JavaScript
+    const monthSaleStatistic = {{ monthSaleStatistic | tojson | safe }};
+    console.log('Dữ liệu thống kê:', monthSaleStatistic);
+
+    // Khởi tạo mảng cho các tháng và doanh thu
+    const monthLabels = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+    const monthlyData = Array(12).fill(0); // Khởi tạo mảng doanh thu cho mỗi tháng, bắt đầu với giá trị 0
+
+    // Hàm tạo màu ngẫu nhiên
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 128 + 127); // Đảm bảo giá trị đỏ từ 127 đến 255 (màu sáng)
+        const g = Math.floor(Math.random() * 128 + 127); // Đảm bảo giá trị xanh lá từ 127 đến 255 (màu sáng)
+        const b = Math.floor(Math.random() * 128 + 127); // Đảm bảo giá trị xanh dương từ 127 đến 255 (màu sáng)
+
+         const alpha = 0.5; // Độ trong suốt (alpha) từ 0 đến 1, ví dụ ở đây là 0.3
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // Khởi tạo mảng màu ngẫu nhiên cho mỗi tháng
+    const monthColors = monthLabels.map(() => getRandomColor()); // Tạo một màu ngẫu nhiên cho mỗi tháng
+    const borderColors = monthColors.map(color => color); // Màu viền sẽ giống màu nền
+
+    // Trích xuất và nhóm doanh thu theo tháng
+    monthSaleStatistic.forEach(item => {
+        // Lấy tháng từ ngày (item[3] là chuỗi ngày, giả sử định dạng là "YYYY-MM-DD")
+        const month = new Date(item[3]).getMonth(); // getMonth() trả về tháng từ 0 đến 11
+
+        // Cộng doanh thu vào tháng tương ứng (item[2] là doanh thu)
+        monthlyData[month] += item[2];
+    });
+
+    // Vẽ biểu đồ
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: monthLabels, // Gán nhãn tháng
+            datasets: [{
+                label: 'Doanh thu theo tháng',
+                data: monthlyData, // Dữ liệu doanh thu theo tháng
+                backgroundColor: monthColors, // Màu nền cho các thanh (màu ngẫu nhiên)
+                borderColor: borderColors,   // Màu viền cho các thanh
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% else %}
+
+<a href="{{ url_for('user_signin') }}">
+  <b>Click here to log in as administrator!</b>
+</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://res.cloudinary.com/dglrht3fj/image/upload/v1734869992/202868639_lrbi3x.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px 0 20px;
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 30px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 30%;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        .cancelbtn {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .cancelbtn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+{% if err_msg %}
+<div class="alert alert-danger">
+    <h4>{{ err_msg }}</h4>
+</div>
+{% endif %}
+
+{% if change_pass %}
+<div class="alert alert-primary">
+    <h4>{{ change_pass }}</h4>
+</div>
+{% endif %}
+
+{% if done_register %}
+<div class="alert alert-primary">
+    <h4>{{ done_register }}</h4>
+</div>
+{% endif %}
+<div class="overlay"></div>
+<div class="content">
+    <h1>Welcome back </h1>
+    <p>Hãy đăng nhập để thực hiện việc truy cập</p>
+    <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+</div>
+<div id="id01" class="modal">
+<form style="width: 50%; margin: 0 auto; margin-top: 3rem;" method="post" action="{{ url_for('user_signin') }}">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <div class="form-group" style="padding-bottom: 10px;">
+        <label for="username"><i class="fa-solid fa-user"></i> Username:</label>
+        <input type="text" name="username" class="form-control" placeholder="Input Username" id="username" required>
+    </div>
+
+    <div class="form-group" style="padding-bottom: 6px;">
+        <label for="password"><i class="fa-solid fa-lock"></i> Password:</label>
+        <input type="password" name="password" class="form-control" placeholder="Input Password" id="password" required>
+    </div>
+
+    <h4>
+        <a href="#" style="color: #cccccc">Forgot Password</a>
+    </h4>
+
+    <button type="submit">Login</button>
+    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+
+</form>
+</div>
+<script>
+    // Close modal when clicking outside of it
+    var modal = document.getElementById('id01');
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

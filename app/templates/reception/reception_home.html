@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<style>
+    .reservation-card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-size: 14px; /* Làm nhỏ giao diện */
+    }
+    .reservation-header {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .reservation-table {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .reservation-actions {
+      text-align: right;
+    }
+    .reservation-actions button {
+      margin-left: 5px;
+    }
+</style>
+<body>
+{% block header %}
+{% include 'reception/reception_header.html' %}
+{% endblock %}
+<main>
+
+    </ul>
+    {% if result %}
+    {% if criteria == "reservation" %}
+    {% for r in result %}
+    <div class="reservation-card mx-5">
+        <!-- Thông tin người đặt -->
+        <div class="reservation-header">Thông tin đặt phòng</div>
+        <table class="table table-borderless reservation-table">
+            <tr>
+                <td><strong>Họ tên người đặt:</strong> {{ r.booker_name }}</td>
+                <td><strong>Phòng đặt:</strong>
+                    {{ r.room.name }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Ngày nhận phòng:</strong> {{ r.checkin_date }}</td>
+                <td><strong>Ngày trả phòng:</strong> {{ r.checkout_date }}</td>
+            </tr>
+        </table>
+
+        <!-- Bảng chi tiết khách hàng -->
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+            <tr>
+                <th>STT</th>
+                <th>Khách hàng</th>
+                <th>Loại khách</th>
+                <th>CMND</th>
+                <th>Địa chỉ</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for c in r.customers %}
+            <tr>
+                <td>{{ loop.index }}</td> <!-- Số thứ tự -->
+                <td>{{ c.name }}</td>
+                <td>{{ c.customer_type.name }}</td>
+                <td>{{ c.cmnd }}</td>
+                <td>{{ c.address }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Các hành động (nếu có) -->
+        <div class="reservation-actions">
+            <a href="/reception_rental?room_id={{ r.room.id }}&room_name={{ r.room.name }}">
+                <button class="btn btn-primary btn-sm">Lập phiếu thuê</button>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% elif criteria == "room_rental" %}
+    {% for r in result %}
+    <div class="reservation-card mx-5">
+        <!-- Thông tin người đặt -->
+        <div class="reservation-header">Thông tin thuê phòng</div>
+        <table class="table table-borderless reservation-table">
+            <tr>
+                <td><strong>Phòng thuê:</strong>
+                    {{ r.room.name }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Ngày nhận phòng:</strong> {{ r.checkin_date }}</td>
+                <td><strong>Ngày trả phòng:</strong> {{ r.checkout_date }}</td>
+            </tr>
+        </table>
+
+        <!-- Bảng chi tiết khách hàng -->
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+            <tr>
+                <th>STT</th>
+                <th>Khách hàng</th>
+                <th>Loại khách</th>
+                <th>CMND</th>
+                <th>Địa chỉ</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for c in r.customers %}
+            <tr>
+                <td>{{ loop.index }}</td> <!-- Số thứ tự -->
+                <td>{{ c.name }}</td>
+                <td>{{ c.customer_type.name }}</td>
+                <td>{{ c.cmnd }}</td>
+                <td>{{ c.address }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="reservation-actions">
+            <a href="/reception_rental?room_id={{ r.id }}&room_name={{ r.name }}">
+                <button class="btn btn-primary btn-sm">Thanh toán</button>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% else %}
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+        <h1>Màn hình làm việc của lễ tân</h1>
+        <p>(Đối với khách đã đặt phòng hãy dùng chức năng tìm kiếm theo tên để thao tác...)</p>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6 d-flex flex-column">
+                <a href="/reception_room?cr_res=true" class="btn btn-success btn-lg mb-5 p-4">Đặt phòng</a>
+                <a href="/reception_room?status=còn trống&cr_rental=true" class="btn btn-success btn-lg mb-5 p-4">Lập
+                    phiếu thuê phòng</a>
+                <a href="/reception_room?status=đã được thuê"class="btn btn-success btn-lg mb-5 p-4">Thanh toán</a>
+            </div>
+
+            <!-- Cột bên phải -->
+            <div class="col-md-6 d-flex flex-column">
+                <a href="/reception_room" class="btn btn-success btn-lg mb-5 p-4">Xem danh sách phòng</a>
+                <a class="btn btn-success btn-lg mb-5 p-4">Yêu cầu đặc biệt</a>
+                <a href="#" class="btn btn-success btn-lg mb-5 p-4">Báo cáo</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
+</body>

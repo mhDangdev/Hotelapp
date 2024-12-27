@@ -1,0 +1,117 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+<h1 class="text-center text-info">BÁO CÁO MẬT ĐỘ SỬ DỤNG PHÒNG</h1>
+<br>
+<form>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin: 0 auto; margin-bottom: 1rem;"
+         class="col-md-10 col-xs-12 form-group">
+        <input style="display: inline-block;" type="number" min="1" max="12" class="form-control"
+               name="month"
+               placeholder="NHÂP THÁNG {{ month }}">
+        <input style="display: inline-block; margin-left: 15px;" type="number" min="2000" class="form-control"
+               name="year"
+               placeholder="NHẬP NĂM {{ year }}">
+        <input style="margin-left: 15px; display: inline-block;" type="submit" value="Submit MONTH"
+               class="btn btn-info">
+    </div>
+</form>
+<div style="justify-content: center;" class="row">
+    <div class="col-md-8 col-xs-12">
+        <table class="table text-center">
+            <tr>
+                <th>STT</th>
+                <th>Phòng</th>
+                <th>Số ngày thuê</th>
+                <th>Tỷ Lệ</th>
+            </tr>
+            {% for r in room_utilization_report %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ r[0] }}</td>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+            </tr>
+            {% endfor %}
+            <form>
+                <select id="viewType" style="display: inline-block; margin-left: 15px;" class="form-control">
+                    <option value="bar">Loại biểu đồ</option>
+                    <option value="bar">Biểu đồ cột</option>
+                    <option value="pie">Biểu đồ tròn</option>
+                    <option value="line">Biểu đồ đường</option>
+                </select>
+                <canvas id="myChart"></canvas>
+            </form>
+        </table>
+    </div>
+</div>
+<div style="margin: 0 auto;" class="col-md-5 col-xs-12">
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    window.onload = function () {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const viewTypeDropdown = document.getElementById('viewType');
+
+        let myChart = null;
+
+        const drawChart = () => {
+            const viewType = viewTypeDropdown.value || 'bar'; // Mặc định là 'bar'
+
+            if (!['pie', 'bar', 'line', 'doughnut', 'polarArea'].includes(viewType)) {
+                console.error(`"${viewType}" is not a valid chart type.`);
+                return;
+            }
+
+            let data = [];
+            let labels = [];
+            let colors = [];
+            let borderColors = [];
+            let r, g, b;
+
+            {% for m in room_utilization_report %}
+            labels.push('{{m[0]}}');
+            data.push({{m[2]}});
+            r = parseInt(Math.random() * 255);
+            g = parseInt(Math.random() * 255);
+            b = parseInt(Math.random() * 255);
+            colors.push(`rgba(${r}, ${g}, ${b}, 0.2)`);
+            borderColors.push(`rgba(${r}, ${g}, ${b}, 1)`);
+            {% endfor %}
+
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: viewType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Tỷ lệ thuê Loại Phòng (%)',
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: viewType === 'bar' ? {
+                        y: {
+                            beginAtZero: true
+                        }
+                    } : {}
+                }
+            });
+        };
+
+        drawChart();
+
+        viewTypeDropdown.addEventListener('change', drawChart);
+    }
+</script>
+
+{% endblock %}

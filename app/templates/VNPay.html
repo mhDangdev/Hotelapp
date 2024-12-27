@@ -1,0 +1,54 @@
+{% extends 'layout/base.html' %}
+{% block title %}
+    Trang thanh toán
+{% endblock title %}
+{% block content %}
+<div class="row mt-3">
+    <div class="col-12 card">
+        <div class="card-header text-center fs-3">Thông tin vé</div>
+        <div class="card-body">
+            {% if reservations %}
+            {% for res in reservations %}
+            <div>
+                <p>Tên phòng đặt : <span>{{res.room_name}}</span></p>
+            </div>
+            <div>
+                <p>Mã phiếu đặt phòng : <span>{{session.get("ticket_info").get("flightid")}}</span></p>
+            </div>
+            <div>
+                <p>Khách hàng : <span>{{cus_name}}</span></p>
+            </div>
+            <div>
+                <p>Hạng vé : <span>{{fareclass_name}}</span></p>
+            </div>
+            <div>
+                <p>Giá vé : <span>{{"{:,.0f}".format(price)}} VNĐ</span></p>
+            </div>
+            <div>
+                <p>Tên máy bay: <span>{{plane_name}}</span></p>
+            </div>
+            <hr>
+            {% endfor %}
+            <div class="">
+                <h3>Số lượng vé: <span id="quantity">{{quantity}}</span></h3>
+                <h3>Tổng tiền: <span> </span> <span id="totalPrice" class="" data-total="">{{"{:,.0f}".format(quantity*price)}} VNĐ</span>
+                </h3>
+            </div>
+            <div class="row">
+                <form class="col-3 mt-3" action="/payment_process" method="post">
+                    <div >
+                        <input type="submit" value="Thanh toán" class="btn btn-danger" onclick="addTicket()" >
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">KHÔNG CÓ VÉ</div>
+    {% endif %}
+
+</div>
+<script src="{{url_for('static',filename='js/ticket.js')}}"></script>
+
+{% endblock %}

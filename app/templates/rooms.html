@@ -1,0 +1,58 @@
+{% extends "layout/base.html" %}
+
+{% block title %}
+    Phòng
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="container">
+
+    <div class="d-flex justify-content-between mt-2">
+        {% if cr_rental != 'true' %}
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="/reception_room">Tất cả</a></li>
+            <li class="page-item"><a class="page-link" href="/reception_room?status=còn trống">Phòng trống</a></li>
+            <li class="page-item"><a class="page-link" href="/reception_room?status=đã được thuê">Phòng đã được thuê</a>
+            </li>
+        </ul>
+        {% endif %}
+        {% if pages > 1 %}
+        <ul class="pagination">
+            {% for i in range(1, pages + 1) %}
+            <li class="page-item"><a class="page-link" href="/reception_room?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% if rooms %}
+    <div class="row">
+        {% for r in rooms %}
+        <div class="col-md-3 col-12 p-2">
+            <div class="card">
+                <img class="card-img-top" src="{{ r.image }}" alt="{{ r.name }}">
+                <div class="card-body">
+                    <h4 class="card-title">{{ r.name }}</h4>
+                    <p class="card-text mb-0">Trạng thái: {{ r.status }}</p>
+                    <p class="card-text mb-0">Loại phòng: {{ r.room_type.name }}</p>
+                    <p class="card-text">Giá phòng: {{ r.room_type.room_type_regulations.price }}</p>
+
+                    <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                    {% if r.status == 'còn trống' %}
+                    <a href="/reception_rental?room_id={{ r.id }}&room_name={{ r.name }}" class="btn btn-danger">Lập
+                        phiếu</a>
+                    {% else %}
+                    <a href="/reception_rental?room_id={{ r.id }}&room_name={{ r.name }}" class="btn btn-danger">Thanh
+                        toán</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info mt-1">KHÔNG có phòng nào!</div>
+    {% endif %}
+</div>
+{% endblock %}

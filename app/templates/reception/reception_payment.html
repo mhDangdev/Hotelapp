@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+
+</head>
+<style>
+    .reservation-card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-size: 14px; /* Làm nhỏ giao diện */
+    }
+    .reservation-header {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .reservation-table {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .reservation-actions {
+      text-align: right;
+    }
+    .reservation-actions button {
+      margin-left: 5px;
+    }
+    .table-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        .table {
+            margin: 0;
+            background-color: white;
+        }
+        .table-bordered > :not(caption) > * > * {
+            border-color: black;
+        }
+        .table thead th {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+        }
+        .table td {
+            vertical-align: middle;
+        }
+</style>
+
+<body>
+{% block header %}
+{% include 'reception/reception_header.html' %}
+{% endblock %}
+
+<main class="container">
+    <div class="container mt-5">
+        <div class="table-container">
+            <table class="table table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th colspan="2">HOÁ ĐƠN THANH TOÁN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Họ tên: <span id="hoTen">{{ cus_name }}</span></td>
+                        <td>Phòng thuê: <span id="phongThue">{{ room_name }}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ngày nhận phòng: <span id="ngayNhanPhong">{{ roomrental.checkin_date }}</span></td>
+                        <td>Ngày trả phòng: <span id="ngayTraPhong">{{ roomrental.checkout_date }}</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Tổng tiền: <span id="tongTien">{{"{:,.0f}".format(total)}} VNĐ</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <!-- Nút xác nhận thanh toán -->
+                            <button id="confirmPayment" class="btn btn-success" onclick="showPaymentOptions()">Xác nhận thanh toán</button>
+                            <!-- Nút hủy -->
+                            <button id="cancelPayment" class="btn btn-danger" onclick="cancelPayment()">Hủy</button>
+                        </td>
+                    </tr>
+                    <!-- Các nút mới sẽ được ẩn khi bắt đầu -->
+                    <tr id="paymentOptions" style="display: none;">
+                        <td colspan="2" class="text-center">
+                            <button class="btn btn-info">Tiền mặt</button>
+                            <button class="btn btn-info" onclick="payWithVNPay()">VNPay</button>
+                            <button class="btn btn-info">Internet banking</button>
+                            <button class="btn btn-info">Hủy</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<script>
+    function showPaymentOptions() {
+        // Ẩn nút thanh toán và hủy
+        document.getElementById("confirmPayment").style.display = "none";
+        document.getElementById("cancelPayment").style.display = "none";
+
+        // Hiện các nút chọn thanh toán
+        document.getElementById("paymentOptions").style.display = "table-row";
+    }
+
+    function cancelPayment() {
+        // Ẩn các nút thanh toán và hủy
+        document.getElementById("confirmPayment").style.display = "none";
+        document.getElementById("cancelPayment").style.display = "none";
+
+        // Hiện lại các nút xác nhận và hủy
+        document.getElementById("paymentOptions").style.display = "none";
+    }
+     function payWithVNPay() {
+        // Chuyển hướng đến trang VNPay.html
+        window.location.href = 'VNPay.html';
+    }
+</script>
+</body>
+</html>
