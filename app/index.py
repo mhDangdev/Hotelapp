@@ -307,10 +307,10 @@ def cart():
 
 
 # admin
-@app.route('/user-logout')
+@app.route('/login')
 def user_signout():
     logout_user()
-    return redirect(url_for('user_signin'))
+    return redirect(url_for('login'))
 
 @login.user_loader
 def user_load(user_id):
